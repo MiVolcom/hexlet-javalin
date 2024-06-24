@@ -6,10 +6,10 @@ public class HelloWorld {
         var app = Javalin.create(config -> {
             config.bundledPlugins.enableDevLogging();
         });
-        app.get("/hello", ctx -> {
-            String name = ctx.queryParamAsClass("name", String.class).getOrDefault("World");
-            String greeting = "Hello, " + name + "!";
-            ctx.result(greeting);
+        app.get("/users/{id}/post/{postId}", ctx -> {
+            String usersId = ctx.pathParam("id");
+            String postId = ctx.pathParam("postId");
+            ctx.result("UsersId" + usersId + "postId" + postId);
         });
         return app;
     }
