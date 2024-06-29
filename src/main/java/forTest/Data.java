@@ -12,31 +12,31 @@ import java.util.stream.Collectors;
 import java.util.Collections;
 
 public class Data {
-    private static final int USERS_COUNT = 30;
+    private static final int ITEMS_COUNT = 30;
 
-    private static int idCounter = USERS_COUNT;
+    private static int idCounter = ITEMS_COUNT;
 
-    public static List<Map<String, String>> getUsers() {
+    public static List<Map<String, String>> getCompanies() {
         Random random = new Random(123);
         Faker faker = new Faker(new Locale("en"), random);
 
         List<String> ids = IntStream
-                .range(1, USERS_COUNT + 1)
+                .range(1, ITEMS_COUNT + 1)
                 .mapToObj(i -> Integer.toString(i))
                 .collect(Collectors.toList());
         Collections.shuffle(ids, random);
 
-        List<Map<String, String>> users = new ArrayList<>();
+        List<Map<String, String>> companies = new ArrayList<>();
 
-        for (int i = 0; i < USERS_COUNT; i++) {
-            Map<String, String> user = new HashMap<>();
-            user.put("id", ids.get(i));
-            user.put("firstName", faker.name().firstName());
-            user.put("lastName", faker.name().lastName());
-            users.add(user);
+        for (int i = 0; i < ITEMS_COUNT; i++) {
+            Map<String, String> company = new HashMap<>();
+            company.put("id", ids.get(i));
+            company.put("name", faker.company().name());
+            company.put("phone", faker.phoneNumber().phoneNumber());
+            companies.add(company);
         }
 
-        return users;
+        return companies;
     }
 
     public static String getNextId() {
