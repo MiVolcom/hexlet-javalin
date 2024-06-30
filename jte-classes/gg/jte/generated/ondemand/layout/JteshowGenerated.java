@@ -2,7 +2,7 @@ package gg.jte.generated.ondemand.layout;
 import org.example.hexlet.dto.UserPage;
 public final class JteshowGenerated {
 	public static final String JTE_NAME = "layout/show.jte";
-	public static final int[] JTE_LINE_INFO = {0,0,1,1,1,3,3,7,7,8,8,8,8,8,8,9,9,9,10,10,10,10,12,12,12,12,12,1,1,1,1};
+	public static final int[] JTE_LINE_INFO = {0,0,1,1,1,3,3,7,7,8,8,8,8,8,8,9,9,9,10,10,10,11,11,11,11,13,13,13,13,13,1,1,1,1};
 	public static void render(gg.jte.html.HtmlTemplateOutput jteOutput, gg.jte.html.HtmlInterceptor jteHtmlInterceptor, UserPage page) {
 		jteOutput.writeContent("\r\n");
 		gg.jte.generated.ondemand.layout.JtepageGenerated.render(jteOutput, jteHtmlInterceptor, new gg.jte.html.HtmlContent() {
@@ -16,6 +16,9 @@ public final class JteshowGenerated {
 				jteOutput.writeContent("</h2>\r\n    <div>");
 				jteOutput.setContext("div", null);
 				jteOutput.writeUserContent(page.getUser().getEmail());
+				jteOutput.writeContent("</div>\r\n    <div>Unescaped User ID: ");
+				jteOutput.setContext("div", null);
+				jteOutput.writeUserContent(page.getUserId());
 				jteOutput.writeContent("</div>\r\n");
 			}
 		}, new gg.jte.html.HtmlContent() {

@@ -29,7 +29,8 @@ public final class HelloWorld {
                     .findFirst()
                     .orElseThrow(() -> new NotFoundResponse("User not found"));
 
-            var page = new UserPage(user);
+            String userId = ctx.queryParam("userId");
+            var page = new UserPage(user, userId);
             ctx.render("layout/show.jte", model("page", page));
         });
 

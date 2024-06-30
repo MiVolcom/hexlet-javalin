@@ -9,4 +9,5 @@ import org.example.hexlet.model.User;
 
 public class UserPage {
     private User user;
+    private String userId;
 }
