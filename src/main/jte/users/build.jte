@@ -1,13 +1,15 @@
+@template.layout.page(
+content = @`
     <form action="/users" method="post">
         <div class="mb-3">
             <label class="form-label">
-                Name
+                Имя
                 <input type="text" class="form-control" name="firstName" />
             </label>
         </div>
         <div class="mb-3">
             <label class="form-label">
-                Last Name
+                Фамилия
                 <input type="text" class="form-control" name="lastName" />
             </label>
         </div>
@@ -19,9 +21,11 @@
         </div>
         <div class="mb-3">
             <label class="form-label">
-                Password
+                Пароль
                 <input type="password" class="form-control" required name="password" />
             </label>
         </div>
-        <input type="submit" class="btn btn-primary" value="Sign up" />
+        <input type="submit" class="btn btn-primary" value="Зарегистрировать" />
     </form>
+`
+)

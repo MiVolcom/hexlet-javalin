@@ -1,10 +1,12 @@
 @import org.example.hexlet.dto.UsersPage
 @param UsersPage page
 
-    <h1>Users</h1>
+@template.layout.page(
+content = @`
+    <h1>Пользователи</h1>
 
     <div class="mb-3">
-        <a href="/users/build">Sign up a new user</a>
+        <a href="/users/build">Зарегистрировать нового пользователя</a>
     </div>
 
     <table class="table table-striped">
@@ -19,4 +21,5 @@
             </tr>
         @endfor
     </table>
-
+`
+)
