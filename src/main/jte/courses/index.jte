@@ -6,7 +6,6 @@
         <title>Хекслет</title>
     </head>
     <body>
-        <h1>${page.getHeader()}</h1>
         @if(page.getCourses().isEmpty())
             <p>No courses have been added yet</p>
         @else
@@ -17,5 +16,9 @@
                </div>
             @endfor
         @endif
+        <form action="/courses" method="get">
+            <input type="search" name="term" value="${page.getTerm()}" />
+            <input type="submit" value="Search" />
+        </form>
     </body>
 </html>

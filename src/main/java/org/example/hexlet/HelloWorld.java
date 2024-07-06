@@ -1,19 +1,15 @@
 package org.example.hexlet;
 
 import io.javalin.Javalin;
-import java.util.List;
-import io.javalin.http.NotFoundResponse;
-import org.example.hexlet.model.Data;
-import org.example.hexlet.model.User;
-import org.example.hexlet.dto.UserPage;
-import org.example.hexlet.dto.UsersPage;
 import static io.javalin.rendering.template.TemplateUtil.model;
+import org.example.hexlet.dto.UsersPage;
+import org.example.hexlet.model.User;
 import io.javalin.rendering.template.JavalinJte;
+import repository.UserRepository;
+
+import java.util.List;
 
 public final class HelloWorld {
-
-    private static final List<User> USERS = Data.getUsers();
-
     public static Javalin getApp() {
 
         var app = Javalin.create(config -> {
@@ -21,28 +17,33 @@ public final class HelloWorld {
             config.fileRenderer(new JavalinJte());
         });
 
-        app.get("/users/{id}", ctx -> {
-            var id = ctx.pathParamAsClass("id", Long.class).get();
-
-            User user = USERS.stream()
-                    .filter(u -> id.equals(u.getId()))
-                    .findFirst()
-                    .orElseThrow(() -> new NotFoundResponse("User not found"));
-
-            String userId = ctx.queryParam("userId");
-            var page = new UserPage(user, userId);
-            ctx.render("layout/show.jte", model("page", page));
-        });
-
-        app.get("/users", ctx -> {
-            var page = new UsersPage(USERS);
-            ctx.render("layout/index.jte", model("page", page));
-
-        });
-
         app.get("/", ctx -> {
             ctx.render("index.jte");
         });
+
+        app.get("/users", ctx -> {
+            List<User> users = UserRepository.getEntities();
+            var page = new UsersPage(users);
+            ctx.render("users/index.jte", model("page", page));
+        });
+
+        // BEGIN
+        app.get("/users/build", ctx -> {
+            ctx.render("users/build.jte");
+        });
+
+        app.post("/users", ctx -> {
+            var firstName = ctx.formParam("firstName");
+            var lastName = ctx.formParam("lastName");
+            var email = ctx.formParam("email").trim().toLowerCase();
+            var password = ctx.formParam("password");
+            var encryptedPassword = password;
+
+            var user = new User(firstName, lastName, email, encryptedPassword);
+            UserRepository.save(user);
+            ctx.redirect("/users");
+        });
+        // END
 
         return app;
     }

@@ -9,5 +9,5 @@ import java.util.List;
 @AllArgsConstructor
 public class CoursePage {
     private List<Course> courses;
-    private String header;
+    private String term;
 }
