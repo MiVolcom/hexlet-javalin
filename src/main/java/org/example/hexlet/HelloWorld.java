@@ -1,3 +1,4 @@
+
 package org.example.hexlet;
 
 import io.javalin.Javalin;
@@ -5,6 +6,7 @@ import static io.javalin.rendering.template.TemplateUtil.model;
 
 import io.javalin.validation.ValidationError;
 import io.javalin.validation.ValidationException;
+import org.example.hexlet.controller.UsersController;
 import org.example.hexlet.dto.UsersPage;
 import org.example.hexlet.model.BuildUserPage;
 import org.example.hexlet.model.User;
@@ -26,37 +28,17 @@ public final class HelloWorld {
             ctx.render("index.jte");
         });
 
-        app.get(NamedRoutes.usersPath(), ctx -> {
-            List<User> users = UserRepository.getEntities();
-            var page = new UsersPage(users);
-            ctx.render("users/index.jte", model("page", page));
-        });
+        app.get("/users", UsersController::index);
 
-        app.get(NamedRoutes.buildUsersPath(), ctx -> {
-            var page = new BuildUserPage();
-            ctx.render("users/build.jte", model("page", page));
-        });
+        app.get("/users/build", UsersController::build);
 
-        app.post(NamedRoutes.usersPath(), ctx -> {
-            var firstName = ctx.formParam("firstName");
-            var lastName = ctx.formParam("lastName");
-            var email = ctx.formParam("email").trim().toLowerCase();
+        app.post("/users", UsersController::create);
 
+        app.get("/users/{id}/edit", UsersController::edit);
 
-            try {
-                var passwordConfirmation = ctx.formParam("passwordConfirmation");
-                var password = ctx.formParamAsClass("password", String.class)
-                        .check(value -> value.equals(passwordConfirmation), "The passwords don't match")
-                        .check(value -> value.length() > 6, "The password is not long enough")
-                        .get();
-                var user = new User(firstName, lastName, email, password);
-                UserRepository.save(user);
-                ctx.redirect("/users");
-            } catch (ValidationException e) {
-                var page = new BuildUserPage(firstName, lastName, email, e.getErrors());
-                ctx.render("users/build.jte", model("page", page));
-            }
-        });
+        app.patch("/users/{id}", UsersController::update);
+
+        app.delete("/users/{id}", UsersController::destroy);
 
         return app;
     }
