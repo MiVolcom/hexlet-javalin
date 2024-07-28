@@ -1,6 +1,7 @@
-
 package org.example.hexlet;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import io.javalin.Javalin;
 import static io.javalin.rendering.template.TemplateUtil.model;
 
@@ -14,43 +15,41 @@ import org.example.hexlet.model.BuildUserPage;
 import org.example.hexlet.model.Course;
 import org.example.hexlet.model.User;
 import io.javalin.rendering.template.JavalinJte;
+import repository.BaseRepository;
 import repository.CourseRepository;
 import repository.UserRepository;
 import org.example.hexlet.dto.courses.CoursesPage;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public final class HelloWorld {
-    public static Javalin getApp() {
+    public static Javalin getApp() throws Exception {
+        var hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl("jdbc:h2:mem:hexlet_project;DB_CLOSE_DELAY=-1;");
+
+        var dataSource = new HikariDataSource(hikariConfig);
+        BaseRepository.dataSource = dataSource;
+
+        var url = HelloWorld.class.getClassLoader().getResourceAsStream("schema.sql");
+        var sql = new BufferedReader(new InputStreamReader(url))
+                .lines().collect(Collectors.joining("\n"));
+
+        try (var connection = dataSource.getConnection();
+             var statement = connection.createStatement()) {
+            statement.execute(sql);
+        }
+        BaseRepository.dataSource = dataSource;
+
         var app = Javalin.create(config -> {
             config.bundledPlugins.enableDevLogging();
             config.fileRenderer(new JavalinJte());
         });
-
-//        app.get("/", ctx -> {
-//            ctx.render("index.jte");
-//        });
-//
-//        app.get("/users", UsersController::index);
-//
-//        app.get("/users/build", UsersController::build);
-//
-//        app.post("/users", UsersController::create);
-//
-//        app.get("/users/{id}/edit", UsersController::edit);
-//
-//        app.patch("/users/{id}", UsersController::update);
-//
-//        app.delete("/users/{id}", UsersController::destroy);
-//        app.get("/", ctx -> {
-//            var visited = Boolean.valueOf(ctx.cookie("visited"));
-//            var page = new MainPage(visited);
-//            ctx.render("mainPage.jte", model("page", page));
-//            ctx.cookie("visited", String.valueOf(true));
-//        });
         // Отображение формы логина
         app.get("/sessions/build", SessionsController::build);
 // Процесс логина
@@ -97,7 +96,12 @@ public final class HelloWorld {
     }
 
     public static void main(String[] args) {
-        Javalin app = getApp();
+        Javalin app = null;
+        try {
+            app = getApp();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         app.start(7070);
     }
 }
