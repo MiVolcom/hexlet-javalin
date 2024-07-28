@@ -1,21 +1,26 @@
+@import org.example.hexlet.NamedRoutes
+@import org.example.hexlet.dto.BasePage
 @import gg.jte.Content
 @param Content content
+@param BasePage page = null
 
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We"
-          crossorigin="anonymous">
-    <title>Hello Hexlet!</title>
+    <title>Hexlet Javalin Example</title>
 </head>
 <body>
-<div class="mx-auto p-4 py-md-5">
-    <main>
-        ${content}
-    </main>
-</div>
+<p>
+    <a href="${NamedRoutes.buildSessionPath()}">Sign in</a>
+    <a href="${NamedRoutes.usersPath()}">Users</a>
+    <a href="${NamedRoutes.coursesPath()}">Courses</a>
+    <a href="${NamedRoutes.carsPath()}">Cars</a>
+</p>
+@if(page != null && page.getFlash() != null)
+    <p>${page.getFlash()}</p>
+@endif
+${content}
 </body>
 </html>
