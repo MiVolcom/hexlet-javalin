@@ -1,5 +1,5 @@
-package org.example.hexlet.model;
 
+package org.example.hexlet.model;
 
 import lombok.Getter;
 import lombok.Setter;

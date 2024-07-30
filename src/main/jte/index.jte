@@ -1,8 +1,10 @@
+
+@import org.example.hexlet.dto.users.UserPage;
+@param UserPage page
+
 @template.layout.page(
 content = @`
-    <h2>Welcome to Hexlet</h2>
-`,
-footer = @`
-    <p>Thanks for visiting, come again soon!</p>
+    <div>${page.getUser().getName()}</div>
+    <div>${page.getUser().getEmail()}</div>
 `
 )

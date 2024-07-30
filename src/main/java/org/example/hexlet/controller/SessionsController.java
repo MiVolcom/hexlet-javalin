@@ -1,8 +1,13 @@
+
 package org.example.hexlet.controller;
 
 import io.javalin.http.Context;
 
+/**
+ * SessionsController.
+ */
 public class SessionsController {
+
     public static void build(Context ctx) {
         ctx.render("sessions/build.jte");
     }

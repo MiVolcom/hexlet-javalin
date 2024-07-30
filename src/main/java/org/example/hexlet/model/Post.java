@@ -10,16 +10,18 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-public final class Course {
+public final class Post {
+
     private Long id;
 
     @ToString.Include
-    private String name;
-    private String description;
+    private String title;
+
+    private String body;
     private LocalDateTime createdAt;
 
-    public Course(String name, String description) {
-        this.name = name;
-        this.description = description;
+    public Post(String title, String body) {
+        this.title = title;
+        this.body = body;
     }
 }

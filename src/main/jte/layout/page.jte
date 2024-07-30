@@ -1,4 +1,4 @@
-@import org.example.hexlet.NamedRoutes
+@import org.example.hexlet.util.NamedRoutes
 @import org.example.hexlet.dto.BasePage
 @import gg.jte.Content
 @param Content content

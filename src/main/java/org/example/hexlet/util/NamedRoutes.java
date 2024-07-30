@@ -1,6 +1,10 @@
-package org.example.hexlet;
+package org.example.hexlet.util;
 
+/**
+ * NamedRoutes.
+ */
 public class NamedRoutes {
+
     public static String sessionsPath() {
         return "/sessions";
     }

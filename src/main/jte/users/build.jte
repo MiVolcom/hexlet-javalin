@@ -1,50 +1,44 @@
-@import org.example.hexlet.model.BuildUserPage
+@import org.example.hexlet.dto.users.BuildUserPage
 @param BuildUserPage page
 
 @template.layout.page(
 content = @`
-
-@if(page.getErrors() != null)
-    <ul>
-        @for(var validator : page.getErrors().values())
-            @for(var error : validator)
-                <li>${error.getMessage()}</li>
+    @if(page.getErrors() != null)
+        <ul>
+            @for(var validator : page.getErrors().values())
+                @for(var error : validator)
+                    <li>${error.getMessage()}</li>
+                @endfor
             @endfor
-        @endfor
-    </ul>
-@endif
+        </ul>
+    @endif
+
     <form action="/users" method="post">
-        <div class="mb-3">
-            <label class="form-label">
-                Имя
-                <input type="text" class="form-control" name="firstName" />
+        <div>
+            <label>
+                Name
+                <input type="text" name="name" value="${page.getName()}" />
             </label>
         </div>
-        <div class="mb-3">
-            <label class="form-label">
-                Фамилия
-                <input type="text" class="form-control" name="lastName" />
-            </label>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">
+        <div>
+            <label>
                 Email
-                <input type="email" class="form-control" required name="email" />
+                <input type="email" required name="email" value="${page.getEmail()}" />
             </label>
         </div>
-        <div class="mb-3">
-            <label class="form-label">
-                Пароль
-                <input type="password" class="form-control" required name="password" />
+        <div>
+            <label>
+                Password
+                <input type="password" required name="password" />
             </label>
         </div>
-        <div class="mb-3">
-            <label class="form-label">
-                Подтверждение пароля
-                <input type="password" class="form-control" required name="passwordConfirmation" />
+        <div>
+            <label>
+                Password Confirmation
+                <input type="password" required name="passwordConfirmation" />
             </label>
         </div>
-        <input type="submit" class="btn btn-primary" value="Зарегистрировать" />
+        <input type="submit" value="Sign Up" />
     </form>
 `
 )
