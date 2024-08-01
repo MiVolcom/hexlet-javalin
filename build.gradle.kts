@@ -8,6 +8,7 @@ plugins {
 }
 
 application {
+    applicationName = "app"
     mainClass.set("org.example.hexlet.HelloWorld")
 }
 
