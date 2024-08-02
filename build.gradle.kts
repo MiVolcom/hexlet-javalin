@@ -27,11 +27,12 @@ dependencies {
     implementation("io.javalin:javalin-rendering:6.1.3")
     implementation("gg.jte:jte:3.1.9")
     compileOnly ("org.projectlombok:lombok:1.18.20")
-    annotationProcessor ("org.projectlombok:lombok:1.18.20")
+    annotationProcessor ("org.projectlombok:lombok:1.18.30")
     testImplementation(platform("org.junit:junit-bom:5.9.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation ("net.datafaker:datafaker:2.2.2")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.15.0")
+    implementation(kotlin("script-runtime"))
 }
 
 tasks.test {
