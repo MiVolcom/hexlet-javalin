@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21-jdk
+FROM gradle:8.9-jdk21
 
 COPY . ./
 
